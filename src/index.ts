@@ -14,8 +14,11 @@ app.use(bodyParser.raw({ type: "application/vnd.custom-type" }));
 app.use(bodyParser.text({ type: "text/html" }));
 
 app.get("/", async (req, res) => {
-  const { rows } = await pool.query("SELECT NOW()");
-  res.send(`Hello, World! The time from the DB is ${rows[0].now}`);
+  const { rows } = await pool.query("SELECT * FROM cats");
+  var name = rows[0].name;
+  res.json({
+    message: `Hello, World! The only cat in the DB is named ${name}`,
+  });
 });
 
 app.listen(port, () => {
